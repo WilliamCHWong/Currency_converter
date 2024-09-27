@@ -20,7 +20,7 @@ function App() {
     toAmount = amount
     fromAmount = amount / exchangeRate
   }
-  
+
   useEffect(()=>{
     fetch(BASE_URL)
       .then(res => res.json())
@@ -32,6 +32,14 @@ function App() {
         setExchangeRate(data.rates[firstCurrency])
       })
   }, [])
+
+  useEffect(()=>{
+    fetch(BASE_URL)
+    .then(res => res.json())
+    .then(data => {
+      setExchangeRate(data.rates[toCurrency]/data.rates[fromCurrency])
+    })
+  },[fromCurrency, toCurrency])
 
   function handleFromAmountChange(e){
     setAmount(e.target.value)
